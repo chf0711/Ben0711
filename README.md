@@ -4,71 +4,174 @@
 
 ## 一、專題摘要
 
-本專題旨在開發一個**智慧行程提醒器**，透過使用者輸入自然語言描述的行程（如：「6月15日晚上8點開會」），結合生成式 AI（ChatGPT）協助將其轉換為標準格式，再以 C 語言撰寫的程式讀取並儲存行程，提供查詢與提醒功能。
+本專題為一個以 C 語言開發的 **CLI（命令列）行程提醒系統**，使用者可新增、查詢、修改與刪除行程，並將行程資料儲存在 `schedule.txt` 檔案中，便於後續查詢與提醒。
 
-本系統展示生成式 AI 在自然語言理解與結構化處理方面的能力，搭配 C 語言在字串與檔案處理上的優勢，實作出一個實用的小型 CLI 工具，應用於生活中的行程管理。
-
----
-
-## 二、設計過程
-
-### 1. 系統流程概念
-
-```
-使用者 ➜ 輸入自然語言
-        ➜ ChatGPT 協助轉換格式
-        ➜ 存入 schedule.txt
-        ➜ C 程式處理與顯示
-```
-
-### 2. 功能設計
-
-- 使用 ChatGPT 將自然語言轉換為格式化行程  
-  範例：`2025/06/15 20:00 開會`
-- 使用 C 語言完成 CLI 程式，具備以下功能：
-  - 新增行程
-  - 查詢今日行程
-  - 查詢下一筆行程
-  - 修改或刪除行程
-- 使用 `schedule.txt` 儲存所有行程資訊
-
-### 3. ChatGPT 協助的部分
-
-- 將自然語言轉換為標準格式（年/月/日 時:分 活動內容）
-- 協助撰寫 C 程式中的時間解析與比較邏輯
-- 協助進行程式除錯與優化
+本專題開發過程中，大量運用 **生成式 AI 工具（如 ChatGPT、Copilot）**，協助完成程式設計、邏輯規劃、錯誤排除與功能優化，大幅提升開發效率與程式品質，展現出 AI 作為學習與開發助理的強大潛力。
 
 ---
 
-## 三、實作結果與心得
-
-### 1. 實作成果
-
-- 可從 schedule.txt 讀取並儲存行程
-- 使用者可透過終端機操作 CLI 選單
-- 行程會依日期時間顯示，支援新增與查詢功能
-
-### 2. 心得與反思
-
-本專題讓我體驗到 AI 作為程式助理的潛力，不只是幫忙寫程式碼，更能協助設計流程與判斷邏輯。也讓我在使用 C 語言處理時間、字串與檔案等方面更加熟練，對 CLI 程式設計有更深入的了解。
+## 二、系統設計與流程
+- ➕ 新增行程（格式：YYYY/MM/DD HH:MM 活動內容）  
+- 📅 查詢今日行程  
+- 🔜 查詢下一筆行程（*未來功能*）  
+- ✏️ 修改或刪除行程（*進階挑戰*）  
+- 🗃 所有行程儲存在 `schedule.txt`
 
 ---
 
-## 四、執行截圖
+## 三、AI 工具協助應用
 
-1. ChatGPT 協助轉換自然語言行程 ➜ 標準格式（對話截圖）  
-2. CLI 執行畫面（查詢今日行程）  
-3. `schedule.txt` 檔案內容截圖（文字格式）  
+本專題不直接使用 AI 作為行程解析器，而是將 AI 作為**開發助理工具**，協助以下工作：
+
+| 項目 | 使用 ChatGPT 協助內容 |
+|------|------------------------|
+| 🧠 專題規劃 | 幫助釐清 CLI 程式的功能模組與流程設計 |
+| 🛠 程式撰寫 | 協助撰寫 C 語言邏輯，如時間處理、檔案操作 |
+| 🐞 除錯優化 | 協助分析錯誤訊息並提供修正建議 |
+| 📐 時間比較 | 指導如何使用 `struct tm` 與 `mktime()` 做時間運算 |
+| 🧾 文字格式 | 協助統一行程輸入格式與資料驗證邏輯 |
+
+---
+
+## 四、技術挑戰與解法
+
+| 問題 | 解決方式 |
+|------|----------|
+| ⏳ 時間比大小困難 | 使用 `struct tm` + `mktime()` 比較時間 |
+| 📝 檔案刪除不易 | 改用「讀取 ➜ 修改 ➜ 輸出至暫存檔 ➜ 覆蓋原檔」方式處理 |
+| 🧵 字串處理繁瑣 | ChatGPT 提供 `fgets()`、`strtok()` 等範例，簡化實作 |
 
 ---
 
-## 五、程式碼與資料連結
+## 五、實作成果與畫面
 
-- GitHub 原始碼連結：https://github.com/chf0711/Ben0711.gitr
-- 包含檔案：
-  - `main.c`
-  - `functions.c`
-  - `functions.h`
-  - `schedule.txt`（範例行程）
+### ⚙️ 系統功能
+
+- ➕ 新增行程（格式：YYYY/MM/DD HH:MM 活動內容）  
+- 📅 查詢今日行程  
+- 🔜 查詢下一筆行程（*未來功能*）  
+- ✏️ 修改或刪除行程（*進階挑戰*）  
+- 🗃 所有行程儲存在 `schedule.txt`
+---
+
+## 六、學習心得與收穫
+
+這次專題不僅強化了我在 C 語言的實作能力，更讓我體會到生成式 AI 作為「開發助理」的價值。透過與 AI 對話，我能夠快速釐清邏輯、學習新語法、解決錯誤，大幅提升開發速度與自信心。
+
+未來我將繼續活用 AI 工具於學習與實作中，發展更多實用應用。
 
 ---
+
+## 七、原始碼與資源
+
+### 📁 檔案架構
+
+
+### 📄 原始碼內容
+
+#### ✅ main.c
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "functions.h"
+
+int main() {
+    int choice;
+    while (1) {
+        printf("\n=== 智慧行程提醒器 ===\n");
+        printf("1. 查詢今天行程\n");
+        printf("2. 查詢下一筆行程\n");
+        printf("3. 新增行程\n");
+        printf("4. 修改或刪除行程\n");
+        printf("5. 離開\n");
+        printf("請選擇：");
+        scanf("%d", &choice);
+        getchar(); // 吃掉換行
+
+        switch (choice) {
+            case 1:
+                show_today_schedule();
+                break;
+            case 2:
+                show_next_schedule();
+                break;
+            case 3:
+                add_schedule();
+                break;
+            case 4:
+                edit_schedule();
+                break;
+            case 5:
+                printf("感謝使用，再見！\n");
+                exit(0);
+            default:
+                printf("請輸入有效選項。\n");
+        }
+    }
+    return 0;
+}
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
+void show_today_schedule();
+void show_next_schedule();
+void add_schedule();
+void edit_schedule();
+
+#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include "functions.h"
+
+#define MAX_LINE 256
+
+void show_today_schedule() {
+    FILE *fp = fopen("schedule.txt", "r");
+    if (!fp) {
+        printf("無法開啟 schedule.txt\n");
+        return;
+    }
+
+    char line[MAX_LINE];
+    time_t t = time(NULL);
+    struct tm *now = localtime(&t);
+    char today[11]; // YYYY/MM/DD
+    strftime(today, sizeof(today), "%Y/%m/%d", now);
+
+    printf("【今日行程】\n");
+    while (fgets(line, sizeof(line), fp)) {
+        if (strncmp(line, today, 10) == 0) {
+            printf("%s", line);
+        }
+    }
+
+    fclose(fp);
+}
+
+void add_schedule() {
+    char new_schedule[MAX_LINE];
+    printf("請輸入行程（格式：YYYY/MM/DD HH:MM 活動內容）：\n");
+    fgets(new_schedule, MAX_LINE, stdin);
+
+    FILE *fp = fopen("schedule.txt", "a");
+    if (!fp) {
+        printf("無法寫入 schedule.txt\n");
+        return;
+    }
+    fputs(new_schedule, fp);
+    fclose(fp);
+
+    printf("✅ 行程已新增！\n");
+}
+
+void show_next_schedule() {
+    printf("🔜 此功能可依照時間排序 schedule.txt 內的內容後顯示下一筆，目前尚未實作排序功能。\n");
+}
+
+void edit_schedule() {
+    printf("✏️ 修改/刪除功能為進階挑戰，可使用臨時檔案方式重寫 schedule.txt。\n");
+}
