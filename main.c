@@ -1,21 +1,10 @@
-// main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-// 已移除 #include "functions.h"
-
-// Function declarations
-void show_today_schedule();
-void show_next_schedule();
-void add_schedule();
-void edit_schedule();
-
-#define MAX_LINE 256
+#include "functions.h"
 
 int main() {
     int choice;
-    char input[16];
     while (1) {
         printf("\n=== 智慧行程提醒器 ===\n");
         printf("1. 查詢今天行程\n");
@@ -24,14 +13,8 @@ int main() {
         printf("4. 修改或刪除行程\n");
         printf("5. 離開\n");
         printf("請選擇：");
-        if (!fgets(input, sizeof(input), stdin)) {
-            printf("輸入錯誤，請重試。\n");
-            continue;
-        }
-        if (sscanf(input, "%d", &choice) != 1) {
-            printf("請輸入有效選項。\n");
-            continue;
-        }
+        scanf("%d", &choice);
+        getchar(); // 吃掉換行
 
         switch (choice) {
             case 1:
@@ -53,7 +36,24 @@ int main() {
                 printf("請輸入有效選項。\n");
         }
     }
+    return 0;
 }
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
+void show_today_schedule();
+void show_next_schedule();
+void add_schedule();
+void edit_schedule();
+
+#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include "functions.h"
+
+#define MAX_LINE 256
 
 void show_today_schedule() {
     FILE *fp = fopen("schedule.txt", "r");
